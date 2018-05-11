@@ -77,8 +77,8 @@
     <section class="wrapper">
       <p>攻击记录</p>
       <div v-for="log in logs" >
-          <p v-if = "log.isplayer" class="playerlog" > monster hit you {{log.you}}</p>
-          <p v-if = "log.ismonster" class="monsterlog" >you higt monster {{log.monster}}</p>
+          <p v-if = "log.isplayer" class="bg-warning text-primary" > monster hit you {{log.you}}</p>
+          <p v-if = "log.ismonster" class="bg-success text-info" >you higt monster {{log.monster}}</p>
       </div>
     </section>
   </div>
