@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue-countPrice</title>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="./js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th>水果种类</th>
+                    <th>剩下数量</th>
+                    <th>购买数量</th>
+                    <th>单价</th>
+                    <th>单个商品总价</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for = "(good,intex) in goods">
+                    <td>{{good.name}}</td>
+                    <td>{{good.count}}</td>
+                    <td>
+                      <button @click = "good.buyNum++" class="btn btn-default">+</button>
+                      {{good.buyNum}}
+                      <button @click = "good.buyNum > 0 && good.buyNum--" class="btn btn-default">-</button>
+                    </td>
+                    <td>{{good.unitPrice}}</td>
+                    <td>{{good.unitPrice*good.buyNum}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3 class="text-center">
+                <label class="text-info bg-success">总价值为 : {{totalPrice}}&nbsp&nbsp&nbsp</label>
+                <button class="btn btn-primary" @click = "toZero">清零</button>
+              </h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>  
+  var xm = new Vue({
+    el : "#app",
+    data : {
+      goods: [
+        {name : "苹果", count : 40, buyNum : 0, unitPrice : 6, sumPrice : 0},
+        {name : "梨", count : 30, buyNum : 0, unitPrice : 2, sumPrice : 0},
+        {name : "香蕉", count : 20, buyNum : 0, unitPrice : 6, sumPrice : 0},
+        {name : "草莓", count : 50, buyNum : 0, unitPrice : 9, sumPrice : 0},
+      ]
+    },
+    methods: {
+      toZero(){
+        this.goods.forEach((ele) => ele.buyNum = 0)
+      }
+    },
+    computed: {
+      totalPrice (){
+       return this.goods.reduce((count,good) => count + good.unitPrice*good.buyNum,0)
+      }
+    }
+  })
+</script>
+
+</html>
