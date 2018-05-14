@@ -6,8 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>vue-gamedemo</title>
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <script src="./js/vue.js"></script>
+  <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
 </head>
 <style>
   #app {
@@ -19,8 +21,6 @@
     border: solid gray 1px;
     box-shadow: 1px 1px 1px;
     width: 600px;
-    /* height: 100px;
-    line-height: 100px; */
     margin: 0 auto;
     padding: 30px 10px;
   }
@@ -77,8 +77,8 @@
     <section class="wrapper">
       <p>攻击记录</p>
       <div v-for="log in logs" >
-          <p v-if = "log.isplayer" class="bg-warning text-primary" > monster hit you {{log.you}}</p>
-          <p v-if = "log.ismonster" class="bg-success text-info" >you higt monster {{log.monster}}</p>
+          <p v-if = "log.isplayer" class="playerlog" > monster hit you {{log.you}}</p>
+          <p v-if = "log.ismonster" class="monsterlog" >you higt monster {{log.monster}}</p>
       </div>
     </section>
   </div>
@@ -100,8 +100,8 @@
           ismonster : true,
           monster : monsterdamage
         })
-        // this.monsterLive = this.monsterLive > 100 ? 100 : this.monsterLive
-        // this.monsterLive = this.monsterLive < 0 ? 0 : this.monsterLive
+        this.monsterLive = this.monsterLive > 100 ? 100 : this.monsterLive
+        this.monsterLive = this.monsterLive < 0 ? 0 : this.monsterLive
         this.checkWin()
       },
       specailAttack: function () {
@@ -112,8 +112,7 @@
           isplayer : true,
           you : mydamage
         })
-        // this.myLive = this.myLive > 100 ? 100 : this.myLive
-        // this.myLive = this.myLive < 0 ? 0 : this.myLive
+        this.myLive = this.myLive < 0 ? 0 : this.myLive
         if (this.checkWin()) {
           return
         }
@@ -122,9 +121,9 @@
           ismonster : true,
           monster : monsterdamage
         })
-        // this.monsterLive = this.monsterLive > 100 ? 100 : this.monsterLive
-        // this.monsterLive = this.monsterLive < 0 ? 0 : this.monsterLive
+        this.monsterLive = this.monsterLive < 0 ? 0 : this.monsterLive
         this.checkWin()
+        
       },
       heal: function () {
         this.myLive += 10
@@ -133,7 +132,6 @@
       startGame: function () {
         this.myLive = 100
         this.monsterLive = 100
-        console.log(this.monsterLive)
         this.show = true
       },
       giveUp: function () {
@@ -147,9 +145,8 @@
       checkWin: function () {
         if (this.myLive <= 0) {
           if (confirm("you lost! new game?")) {
-            console.log(this.monsterLive)
             this.startGame()
-            console.log(this.monsterLive)
+            return true
           } else {
             this.show = false
           }
@@ -162,17 +159,7 @@
         }
         return false
       }
-    },
-    // watch: {
-    //   myLive : function(){
-    //     myLive = myLive > 100 ? 100 : myLive
-    //     myLive = myLive < 0 ? 0 : myLive
-    //   },
-    //   monsterLive : function(){
-    //     monsterLive = monsterLive > 100 ? 100 : myLive
-    //     monsterLive = monsterLive < 0 ? 0 : myLive
-    //   }
-    // }
+    }
   })
 </script>
 

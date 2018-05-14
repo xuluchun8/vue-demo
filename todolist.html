@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>todolist-备忘录</title>
   <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  <script src="./vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <style>
   .margin-top {
@@ -60,11 +60,11 @@
       add(value) {
         localStorage.setItem("todolist", JSON.stringify(value))
       },
-      get() {
+      get : function() {
         return JSON.parse(localStorage.getItem("todolist"))
       },
-      remove() {
-        localStorage.removeItem("todolist")
+      remove(a) {
+        localStorage.removeItem(a)
       }
     }
   })()
@@ -72,8 +72,8 @@
     el: "#app",
     data: {
       inputValue: "",
-      dealedEvents: lsC.get().dealedEvents || [],
-      toDoEvents: lsC.get().toDoEvents || []
+      dealedEvents: lsC.get() ? lsC.get().dealedEvents : [],
+      toDoEvents: lsC.get() ? lsC.get().toDoEvents : []
     },
     methods: {
       addToDo: function () {
@@ -95,7 +95,10 @@
       },
       deleteDealed: function (e) {
         var index = e.target.dataset.id;
+        console.log(this.dealedEvents)
         this.dealedEvents.splice(index, 1)
+        console.log(this.dealedEvents)
+        lsC.add(this._data)
       }
     }
   })
